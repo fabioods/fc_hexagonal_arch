@@ -24,19 +24,29 @@ func (s *ProductService) Create(name string, price float64) (ProductInterface, e
 	product.Price = price
 
 	if ok, err := product.IsValid(); !ok {
-		return nil, err
+		return &Product{}, err
 	}
 
-	return s.Persistence.Save(product)
+	result, err := s.Persistence.Save(product)
+	if err != nil {
+		return &Product{}, err
+	}
+
+	return result, err
 }
 
 func (s *ProductService) Enable(product ProductInterface) (ProductInterface, error) {
 	err := product.Enable()
 	if err != nil {
-		return nil, err
+		return &Product{}, err
 	}
 
-	return s.Persistence.Save(product)
+	result, err := s.Persistence.Save(product)
+	if err != nil {
+		return &Product{}, err
+	}
+
+	return result, err
 }
 
 func (s *ProductService) Disable(product ProductInterface) (ProductInterface, error) {
@@ -45,5 +55,10 @@ func (s *ProductService) Disable(product ProductInterface) (ProductInterface, er
 		return nil, err
 	}
 
-	return s.Persistence.Save(product)
+	result, err := s.Persistence.Save(product)
+	if err != nil {
+		return &Product{}, err
+	}
+
+	return result, err
 }
