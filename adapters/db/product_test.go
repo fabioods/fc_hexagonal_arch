@@ -3,6 +3,7 @@ package db_test
 import (
 	"database/sql"
 	"github.com/fabioods/fc_hexagonal_arch/adapters/db"
+	"github.com/fabioods/fc_hexagonal_arch/application"
 	"github.com/stretchr/testify/require"
 	"log"
 	"testing"
@@ -50,4 +51,27 @@ func TestProductDB_Get(t *testing.T) {
 	require.Equal(t, "Product test", product.GetName())
 	require.Equal(t, 0.0, product.GetPrice())
 	require.Equal(t, "disabled", product.GetStatus())
+}
+
+func TestProductDB_Save(t *testing.T) {
+	setup()
+	defer Db.Close()
+	productDB := db.NewProductDB(Db)
+	product := application.NewProduct()
+	product.Name = "Product test"
+	product.Price = 10.0
+
+	productResult, err := productDB.Save(product)
+	require.Nil(t, err)
+	require.Equal(t, product.Name, productResult.GetName())
+	require.Equal(t, product.Price, productResult.GetPrice())
+	require.Equal(t, product.Status, productResult.GetStatus())
+
+	product.Name = "Product test 2"
+	product.Price = 20.0
+	productUpdated, err := productDB.Save(product)
+	require.Nil(t, err)
+	require.Equal(t, product.Name, productUpdated.GetName())
+	require.Equal(t, product.Price, productUpdated.GetPrice())
+	require.Equal(t, product.Status, productUpdated.GetStatus())
 }
