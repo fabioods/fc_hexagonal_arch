@@ -36,6 +36,9 @@ func (s *ProductService) Create(name string, price float64) (ProductInterface, e
 }
 
 func (s *ProductService) Enable(product ProductInterface) (ProductInterface, error) {
+	if product.GetPrice() == 0 {
+		product.UpdatePrice(1)
+	}
 	err := product.Enable()
 	if err != nil {
 		return &Product{}, err
