@@ -13,6 +13,12 @@
 go mod tidy
 ```
 
+## Generate Interfaces
+
+```sh
+mockgen -destination=application/mocks/application.go -source=application/product.go
+```
+
 ## Author
 
 👤 **Fábio dos Santos**

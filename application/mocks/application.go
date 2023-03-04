@@ -133,6 +133,34 @@ func (mr *MockProductInterfaceMockRecorder) IsValid() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsValid", reflect.TypeOf((*MockProductInterface)(nil).IsValid))
 }
 
+// UpdateName mocks base method.
+func (m *MockProductInterface) UpdateName(name string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateName", name)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateName indicates an expected call of UpdateName.
+func (mr *MockProductInterfaceMockRecorder) UpdateName(name interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateName", reflect.TypeOf((*MockProductInterface)(nil).UpdateName), name)
+}
+
+// UpdatePrice mocks base method.
+func (m *MockProductInterface) UpdatePrice(price float64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdatePrice", price)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdatePrice indicates an expected call of UpdatePrice.
+func (mr *MockProductInterfaceMockRecorder) UpdatePrice(price interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdatePrice", reflect.TypeOf((*MockProductInterface)(nil).UpdatePrice), price)
+}
+
 // MockProductServiceInterface is a mock of ProductServiceInterface interface.
 type MockProductServiceInterface struct {
 	ctrl     *gomock.Controller

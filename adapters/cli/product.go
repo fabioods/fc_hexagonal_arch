@@ -34,7 +34,7 @@ func Run(service application.ProductServiceInterface, action string, productID s
 		if err != nil {
 			return result, err
 		}
-		result = fmt.Sprintf("Product %s enabled with success!", res.GetID())
+		result = fmt.Sprintf("Product %s disabled with success!", res.GetID())
 	default:
 		product, err := service.Get(productID)
 		if err != nil {
