@@ -14,6 +14,8 @@ type ProductInterface interface {
 	GetName() string
 	GetStatus() string
 	GetPrice() float64
+	UpdateName(name string) error
+	UpdatePrice(price float64) error
 }
 
 type ProductServiceInterface interface {
@@ -73,7 +75,7 @@ func (p *Product) Disable() error {
 		p.Status = DISABLED
 		return nil
 	}
-	return errors.New("the price must be greater than zero to disable the product")
+	return errors.New("the price must be lower or equal to zero to disable the product")
 }
 
 func (p *Product) IsValid() (bool, error) {
@@ -111,4 +113,20 @@ func (p *Product) GetStatus() string {
 
 func (p *Product) GetPrice() float64 {
 	return p.Price
+}
+
+func (p *Product) UpdateName(name string) error {
+	if name == "" {
+		return errors.New("name is required")
+	}
+	p.Name = name
+	return nil
+}
+
+func (p *Product) UpdatePrice(price float64) error {
+	if price < 0 {
+		return errors.New("the price must be greater than zero")
+	}
+	p.Price = price
+	return nil
 }
