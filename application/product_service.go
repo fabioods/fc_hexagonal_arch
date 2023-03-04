@@ -50,6 +50,7 @@ func (s *ProductService) Enable(product ProductInterface) (ProductInterface, err
 }
 
 func (s *ProductService) Disable(product ProductInterface) (ProductInterface, error) {
+	product.UpdatePrice(0)
 	err := product.Disable()
 	if err != nil {
 		return nil, err
