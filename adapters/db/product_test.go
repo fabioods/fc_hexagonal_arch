@@ -1,8 +1,11 @@
-package db
+package db_test
 
 import (
 	"database/sql"
+	"github.com/fabioods/fc_hexagonal_arch/adapters/db"
+	"github.com/stretchr/testify/require"
 	"log"
+	"testing"
 )
 
 var Db *sql.DB
@@ -29,11 +32,22 @@ func createTable(db *sql.DB) {
 }
 
 func createProduct(db *sql.DB) {
-	insert := `INSERT INTO products (id, name, price, status) VALUES ("123", "Product test", 12.0, "disabled");`
+	insert := `INSERT INTO products (id, name, price, status) VALUES ("123", "Product test", 0.0, "disabled");`
 	stmt, err := db.Prepare(insert)
 	if err != nil {
 		log.Fatalf("Error preparing insert: %s", err.Error())
 	}
 	stmt.Exec()
+}
 
+func TestProductDB_Get(t *testing.T) {
+	setup()
+	defer Db.Close()
+	productDB := db.NewProductDB(Db)
+	product, err := productDB.Get("123")
+	require.Nil(t, err)
+	require.Equal(t, "123", product.GetID())
+	require.Equal(t, "Product test", product.GetName())
+	require.Equal(t, 0.0, product.GetPrice())
+	require.Equal(t, "disabled", product.GetStatus())
 }
